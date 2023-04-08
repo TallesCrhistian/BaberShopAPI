@@ -1,8 +1,8 @@
 ﻿using BaberShopAPI.Shared.Enumerators;
 
-namespace BaberShopAPI.Entities
+namespace BaberShopAPI.Shared.Dtos
 {
-    public class Client
+    public class ClientDTO
     {
         public int IdClient { get; set; }
         public string FirstName { get; set; }

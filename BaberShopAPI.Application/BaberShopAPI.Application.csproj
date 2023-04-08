@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BaberShopAPI.Data\BaberShopAPI.Data.csproj" />
+  </ItemGroup>
+
 </Project>

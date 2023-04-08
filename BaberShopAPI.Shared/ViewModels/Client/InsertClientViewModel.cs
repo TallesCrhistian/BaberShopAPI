@@ -1,10 +1,9 @@
 ﻿using BaberShopAPI.Shared.Enumerators;
 
-namespace BaberShopAPI.Entities
+namespace BaberShopAPI.Shared.ViewModels.Client
 {
-    public class Client
+    public class InsertClientViewModel
     {
-        public int IdClient { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public EnumGender Gender { get; set; }
