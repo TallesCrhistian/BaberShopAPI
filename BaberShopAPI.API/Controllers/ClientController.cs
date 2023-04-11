@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BaberShopAPI.Application.Interfaces;
-using BaberShopAPI.Application.Services;
 using BaberShopAPI.Shared.Dtos;
 using BaberShopAPI.Shared.DTOs;
 using BaberShopAPI.Shared.ViewModels.Client;
@@ -26,6 +25,7 @@ namespace BaberShopAPI.API.Controllers
         public async Task<IActionResult> Inserir([FromBody] InsertClientViewModel clientViewModel)
         {
             ClientDTO clientDTO = _mapper.Map<ClientDTO>(clientViewModel);
+
             SeviceResponseDTO<ClientDTO> seviceResponseDTO = await _iClientServices.Inserir(clientDTO);
 
             return Ok(seviceResponseDTO);

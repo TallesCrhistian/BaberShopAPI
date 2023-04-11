@@ -1,6 +1,10 @@
 ﻿using BaberShopAPI.Application.Interfaces;
 using BaberShopAPI.Application.Services;
+using BaberShopAPI.Business;
+using BaberShopAPI.Business.Interfaces;
 using BaberShopAPI.Data;
+using BaberShopAPI.Data.Interfaces;
+using BaberShopAPI.Data.Repository;
 using BaberShopAPI.Data.WorkUnit;
 using BaberShopAPI.Data.WorkUnit.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +13,7 @@ namespace BaberShopAPI.API
 {
     public static class ServiceExtensions
     {
+        
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration iConfiguration)
         {
             services.AddDbContext<AppDbContext>(x => x.UseSqlServer(iConfiguration.GetConnectionString("DefaultConnection")));
@@ -23,19 +28,19 @@ namespace BaberShopAPI.API
             return services;
         }
 
-        //public static IServiceCollection AddBusiness(this IServiceCollection services)
-        //{
-        //    services.AddScoped<IClienteNegocios, ClienteNegocios>();
-           
-        //    return services;
-        //}
+        public static IServiceCollection AddBusiness(this IServiceCollection services)
+        {
+            services.AddScoped<IClientBusiness, ClienteBusiness>();
 
-        //public static IServiceCollection AddRepository(this IServiceCollection services)
-        //{
-        //    services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
-           
-        //    return services;
-        //}
+            return services;
+        }
+
+        public static IServiceCollection AddRepository(this IServiceCollection services)
+        {
+            services.AddScoped<IClientRepository, ClientRepository>();
+
+            return services;
+        }
 
         public static IServiceCollection WorkUnit(this IServiceCollection services)
         {

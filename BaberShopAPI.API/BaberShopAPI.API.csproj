@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BaberShopAPI.Application\BaberShopAPI.Application.csproj" />
     <ProjectReference Include="..\BaberShopAPI.Data\BaberShopAPI.Data.csproj" />
+    <ProjectReference Include="..\BaberShopAPI.Utils\BaberShopAPI.Utils.csproj" />
   </ItemGroup>
 
 </Project>

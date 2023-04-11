@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BaberShopAPI.Data\BaberShopAPI.Data.csproj" />
+    <ProjectReference Include="..\BaberShopAPI.Entities\BaberShopAPI.Entities.csproj" />
+    <ProjectReference Include="..\BaberShopAPI.Shared\BaberShopAPI.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
