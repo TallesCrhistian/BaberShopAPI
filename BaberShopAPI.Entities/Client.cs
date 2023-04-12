@@ -5,6 +5,7 @@ namespace BaberShopAPI.Entities
     public class Client
     {
         public int IdClient { get; set; }
+        public bool Active { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public EnumGender Gender { get; set; }

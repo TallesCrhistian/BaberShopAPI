@@ -1,5 +1,6 @@
 ﻿using BaberShopAPI.Data.Interfaces;
 using BaberShopAPI.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BaberShopAPI.Data.Repository
 {
@@ -20,5 +21,18 @@ namespace BaberShopAPI.Data.Repository
             return client;
         }
 
+        public async Task<Client> Delete(int idClient)
+        {
+            Client client = await _appDbContext.Customers.Where(x => x.IdClient == idClient).FirstOrDefaultAsync();
+
+            if (client != null)
+            {
+                client.Active = false;
+                _appDbContext.Set<Client>().Update(client);
+                await _appDbContext.SaveChangesAsync();
+            }
+
+            return client;
+        }
     }
 }

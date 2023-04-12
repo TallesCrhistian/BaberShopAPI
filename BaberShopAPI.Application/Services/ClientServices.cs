@@ -3,35 +3,42 @@ using BaberShopAPI.Business.Interfaces;
 using BaberShopAPI.Data.WorkUnit.Interfaces;
 using BaberShopAPI.Shared.Dtos;
 using BaberShopAPI.Shared.DTOs;
+using BaberShopAPI.Shared.Messages;
 
 namespace BaberShopAPI.Application.Services
 {
     public class ClientServices : IClientServices
     {
+        private SeviceResponseDTO<ClientDTO> seviceResponseDTO = new SeviceResponseDTO<ClientDTO>();
         private readonly IWorkUnit _iWorkUnit;
         private readonly IClientBusiness _iClientBusiness;
 
-        public ClientServices(IWorkUnit iWorkUnit)
+        public ClientServices(IWorkUnit iWorkUnit, IClientBusiness clientBusiness)
         {
             _iWorkUnit = iWorkUnit;
+            _iClientBusiness = clientBusiness;
         }
 
-        public async Task<SeviceResponseDTO<ClientDTO>> Inserir(ClientDTO clientDTO)
+        public async Task<SeviceResponseDTO<ClientDTO>> Insert(ClientDTO clientDTO)
         {
-            SeviceResponseDTO<ClientDTO> seviceResponseDTO = new SeviceResponseDTO<ClientDTO>();
 
-            try
+            seviceResponseDTO.Dados = await _iClientBusiness.Insert(clientDTO);
+            await _iWorkUnit.CommitAsync();
+
+
+            return seviceResponseDTO;
+        }
+
+        public async Task<SeviceResponseDTO<ClientDTO>> Delete(int idClient)
+        {
+            seviceResponseDTO.Dados = await _iClientBusiness.Delete(idClient);
+
+            if (seviceResponseDTO.Dados.IdClient == 0)
             {
-                seviceResponseDTO.Dados = await _iClientBusiness.Inserir(clientDTO);
-                await _iWorkUnit.CommitAsync();
+                seviceResponseDTO.Message = ConstantMessages.NoRecordLocated;
             }
 
-            catch (Exception ex)
-            {
-                seviceResponseDTO.Sucess = false;
-                seviceResponseDTO.Message = ex.GetBaseException().Message;
-                _iWorkUnit.Rollback();
-            }
+            await _iWorkUnit.CommitAsync();
 
             return seviceResponseDTO;
         }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaberShopAPI.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230411022635_Root")]
+    [Migration("20230412012804_Root")]
     partial class Root
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,9 @@ namespace BaberShopAPI.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdClient"), 1L, 1);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Cpf")
                         .IsRequired()
@@ -60,7 +63,7 @@ namespace BaberShopAPI.Data.Migrations
 
                     b.HasKey("IdClient");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Customers");
                 });
 #pragma warning restore 612, 618
         }

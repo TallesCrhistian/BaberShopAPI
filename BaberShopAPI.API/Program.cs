@@ -3,14 +3,14 @@ using BaberShopAPI.Utils.MappingProfile;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.WorkUnit();
 builder.Services.AddRepository();
 builder.Services.AddBusiness();
-builder.Services.AddBusiness();
+builder.Services.AddServices();
+builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();

@@ -5,6 +5,7 @@ namespace BaberShopAPI.Application.Interfaces
 {
     public interface IClientServices
     {
-        Task<SeviceResponseDTO<ClientDTO>> Inserir(ClientDTO clientDTO);
+        Task<SeviceResponseDTO<ClientDTO>> Insert(ClientDTO clientDTO);
+        Task<SeviceResponseDTO<ClientDTO>> Delete(int idClient);
     }
 }

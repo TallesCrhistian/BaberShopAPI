@@ -15,6 +15,6 @@ namespace BaberShopAPI.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
 
-        public DbSet<Client> Clients { get; set; }
+        public DbSet<Client> Customers { get; set; }
     }
 }

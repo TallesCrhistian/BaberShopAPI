@@ -17,11 +17,20 @@ namespace BaberShopAPI.Business
             _iClientRepository = clientRepositorio;
         }
 
-        public async Task<ClientDTO> Inserir(ClientDTO clientDTO)
+        public async Task<ClientDTO> Insert(ClientDTO clientDTO)
         {
             Client client = _mapper.Map<Client>(clientDTO);
             client = await _iClientRepository.Inserir(client);
+
             return _mapper.Map<ClientDTO>(client);
+        }
+
+        public async Task<ClientDTO> Delete(int idClient)
+        {
+            Client client = await _iClientRepository.Delete(idClient);
+            ClientDTO clientDTO = (client != null) ? _mapper.Map<ClientDTO>(client) : new ClientDTO();
+
+            return clientDTO;
         }
     }
 }

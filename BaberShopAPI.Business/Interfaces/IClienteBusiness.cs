@@ -4,6 +4,7 @@ namespace BaberShopAPI.Business.Interfaces
 {
     public interface IClientBusiness
     {
-        Task<ClientDTO> Inserir(ClientDTO clientDTO);
+        Task<ClientDTO> Insert(ClientDTO clientDTO);
+        Task<ClientDTO> Delete(int idClient);
     }
 }
