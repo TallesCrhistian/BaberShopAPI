@@ -9,10 +9,12 @@ namespace BaberShopAPI.Utils.MappingProfile
     {
         public MappingProfile()
         {
-            CreateMap<InsertClientViewModel, ClientDTO>()
+            CreateMap<ClientViewModel, ClientDTO>()
                 .ReverseMap();
             CreateMap<ClientDTO, Client>()
                 .ReverseMap();
+            CreateMap<ClientViewModel, Client>()
+               .ReverseMap();
         }
     }
 }

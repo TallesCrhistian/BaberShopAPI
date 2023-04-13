@@ -34,5 +34,14 @@ namespace BaberShopAPI.Data.Repository
 
             return client;
         }
+
+        public async Task<Client> Get(int idClient)
+        {
+            Client client = await _appDbContext.Customers.Where(x => x.IdClient == idClient).FirstOrDefaultAsync();
+
+            if (client != null) await _appDbContext.SaveChangesAsync();
+
+            return client;
+        }
     }
 }

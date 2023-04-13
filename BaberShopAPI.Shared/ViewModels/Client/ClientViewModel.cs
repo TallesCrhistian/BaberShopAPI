@@ -2,7 +2,7 @@
 
 namespace BaberShopAPI.Shared.ViewModels.Client
 {
-    public class InsertClientViewModel
+    public class ClientViewModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

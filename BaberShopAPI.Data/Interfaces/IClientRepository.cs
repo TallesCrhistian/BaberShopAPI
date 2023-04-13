@@ -6,5 +6,6 @@ namespace BaberShopAPI.Data.Interfaces
     {
         Task<Client> Inserir(Client client);
         Task<Client> Delete(int idClient);
+        Task<Client> Get(int idClient);
     }
 }

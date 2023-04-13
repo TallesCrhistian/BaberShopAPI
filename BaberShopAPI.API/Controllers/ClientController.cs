@@ -5,6 +5,7 @@ using BaberShopAPI.Shared.Dtos;
 using BaberShopAPI.Shared.DTOs;
 using BaberShopAPI.Shared.ViewModels.Client;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace BaberShopAPI.API.Controllers
 {
@@ -13,6 +14,7 @@ namespace BaberShopAPI.API.Controllers
     public class ClientController : ControllerBase
     {
         private SeviceResponseDTO<ClientDTO> seviceResponseDTO = new SeviceResponseDTO<ClientDTO>();
+        private SeviceResponseDTO<ClientViewModel> seviceResponseViewModel = new SeviceResponseDTO<ClientViewModel>();
         private IClientServices _iClientServices;
         private IMapper _mapper;
         private readonly IWorkUnit _iWorkUnit;
@@ -26,42 +28,73 @@ namespace BaberShopAPI.API.Controllers
 
         [HttpPost]
         [Route(nameof(Insert))]
-        public async Task<IActionResult> Insert([FromBody] InsertClientViewModel clientViewModel)
+        public async Task<IActionResult> Insert([FromBody] ClientViewModel clientViewModel)
         {
             try
             {
                 ClientDTO clientDTO = _mapper.Map<ClientDTO>(clientViewModel);
 
-                seviceResponseDTO = await _iClientServices.Insert(clientDTO);
+                seviceResponseViewModel = await _iClientServices.Insert(clientDTO);
             }
 
             catch (Exception ex)
             {
-                seviceResponseDTO.Sucess = false;
-                seviceResponseDTO.Message = ex.GetBaseException().Message;
+                seviceResponseViewModel.Sucess = false;
+                seviceResponseViewModel.Message = ex.GetBaseException().Message;
                 _iWorkUnit.Rollback();
             }
 
-            return Ok(seviceResponseDTO);
+            return Ok(seviceResponseViewModel);
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Delete(int idClient)
+        [Route(nameof(Delete))]
+        public async Task<IActionResult> Delete(int idClient)
         {
             try
             {
                 seviceResponseDTO = await _iClientServices.Delete(idClient);
+
+                ClientViewModel clientViewModel = _mapper.Map<ClientViewModel>(seviceResponseDTO.Dados); //Criar viewModel para delete
+
+                seviceResponseViewModel.Dados = clientViewModel;
+                seviceResponseViewModel.Sucess = seviceResponseDTO.Sucess;
+                seviceResponseViewModel.Message = seviceResponseDTO.Message;
             }
 
             catch (Exception ex)
             {
-                seviceResponseDTO.Sucess = false;
-                seviceResponseDTO.Message = ex.GetBaseException().Message;
+                seviceResponseViewModel.Sucess = false;
+                seviceResponseViewModel.Message = ex.GetBaseException().Message;
                 _iWorkUnit.Rollback();
             }
 
-            return Ok(seviceResponseDTO);
+            return Ok(seviceResponseViewModel);
+        }
 
+        [HttpGet]
+        [Route(nameof(Get))]
+        public async Task<IActionResult> Get(int idClient)
+        {
+            try
+            {
+                seviceResponseDTO = await _iClientServices.Get(idClient);
+
+                ClientViewModel clientViewModel = _mapper.Map<ClientViewModel>(seviceResponseDTO.Dados);
+
+                seviceResponseViewModel.Dados = clientViewModel;
+                seviceResponseViewModel.Sucess = seviceResponseDTO.Sucess;
+                seviceResponseViewModel.Message = seviceResponseDTO.Message;
+            }
+
+            catch (Exception ex)
+            {
+                seviceResponseViewModel.Sucess = false;
+                seviceResponseViewModel.Message = ex.GetBaseException().Message;
+                _iWorkUnit.Rollback();
+            }
+
+            return Ok(seviceResponseViewModel);
         }
     }
 }

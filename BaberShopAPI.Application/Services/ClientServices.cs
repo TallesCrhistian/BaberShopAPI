@@ -4,12 +4,14 @@ using BaberShopAPI.Data.WorkUnit.Interfaces;
 using BaberShopAPI.Shared.Dtos;
 using BaberShopAPI.Shared.DTOs;
 using BaberShopAPI.Shared.Messages;
+using BaberShopAPI.Shared.ViewModels.Client;
 
 namespace BaberShopAPI.Application.Services
 {
     public class ClientServices : IClientServices
     {
         private SeviceResponseDTO<ClientDTO> seviceResponseDTO = new SeviceResponseDTO<ClientDTO>();
+        private SeviceResponseDTO<ClientViewModel> seviceResponseView = new SeviceResponseDTO<ClientViewModel>();        
         private readonly IWorkUnit _iWorkUnit;
         private readonly IClientBusiness _iClientBusiness;
 
@@ -19,14 +21,14 @@ namespace BaberShopAPI.Application.Services
             _iClientBusiness = clientBusiness;
         }
 
-        public async Task<SeviceResponseDTO<ClientDTO>> Insert(ClientDTO clientDTO)
+        public async Task<SeviceResponseDTO<ClientViewModel>> Insert(ClientDTO clienteDto)
         {
 
-            seviceResponseDTO.Dados = await _iClientBusiness.Insert(clientDTO);
+            seviceResponseView.Dados = await _iClientBusiness.Insert(clienteDto);
             await _iWorkUnit.CommitAsync();
 
 
-            return seviceResponseDTO;
+            return seviceResponseView;
         }
 
         public async Task<SeviceResponseDTO<ClientDTO>> Delete(int idClient)
@@ -34,6 +36,20 @@ namespace BaberShopAPI.Application.Services
             seviceResponseDTO.Dados = await _iClientBusiness.Delete(idClient);
 
             if (seviceResponseDTO.Dados.IdClient == 0)
+            {
+                seviceResponseDTO.Message = ConstantMessages.NoRecordLocated;
+            }
+
+            await _iWorkUnit.CommitAsync();
+
+            return seviceResponseDTO;
+        }
+
+        public async Task<SeviceResponseDTO<ClientDTO>> Get(int idClient)
+        {
+            seviceResponseDTO.Dados = await _iClientBusiness.Get(idClient);
+
+            if (seviceResponseDTO.Dados == null)
             {
                 seviceResponseDTO.Message = ConstantMessages.NoRecordLocated;
             }

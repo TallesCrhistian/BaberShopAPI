@@ -3,6 +3,7 @@ using BaberShopAPI.Business.Interfaces;
 using BaberShopAPI.Data.Interfaces;
 using BaberShopAPI.Entities;
 using BaberShopAPI.Shared.Dtos;
+using BaberShopAPI.Shared.ViewModels.Client;
 
 namespace BaberShopAPI.Business
 {
@@ -17,12 +18,12 @@ namespace BaberShopAPI.Business
             _iClientRepository = clientRepositorio;
         }
 
-        public async Task<ClientDTO> Insert(ClientDTO clientDTO)
+        public async Task<ClientViewModel> Insert(ClientDTO clientDTO)
         {
             Client client = _mapper.Map<Client>(clientDTO);
             client = await _iClientRepository.Inserir(client);
 
-            return _mapper.Map<ClientDTO>(client);
+            return _mapper.Map<ClientViewModel>(client);
         }
 
         public async Task<ClientDTO> Delete(int idClient)
@@ -31,6 +32,14 @@ namespace BaberShopAPI.Business
             ClientDTO clientDTO = (client != null) ? _mapper.Map<ClientDTO>(client) : new ClientDTO();
 
             return clientDTO;
+        }
+
+        public async Task<ClientDTO> Get(int idClient)
+        {
+            Client client = await _iClientRepository.Get(idClient);
+            ClientDTO clienteDTO = (client != null) ? _mapper.Map<ClientDTO>(client) : new ClientDTO();
+            
+            return clienteDTO;
         }
     }
 }
