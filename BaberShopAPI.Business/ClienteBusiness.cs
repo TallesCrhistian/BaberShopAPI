@@ -20,7 +20,7 @@ namespace BaberShopAPI.Business
 
         public async Task<ClientViewModel> Insert(ClientDTO clientDTO)
         {
-            Client client = _mapper.Map<Client>(clientDTO);
+            Client client = _mapper.Map<Client>(clientDTO);            
             client = await _iClientRepository.Inserir(client);
 
             return _mapper.Map<ClientViewModel>(client);
@@ -38,7 +38,7 @@ namespace BaberShopAPI.Business
         {
             Client client = await _iClientRepository.Get(idClient);
             ClientDTO clienteDTO = (client != null) ? _mapper.Map<ClientDTO>(client) : new ClientDTO();
-            
+
             return clienteDTO;
         }
     }

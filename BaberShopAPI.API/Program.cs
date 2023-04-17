@@ -1,5 +1,7 @@
 using BaberShopAPI.API;
+using BaberShopAPI.Shared.Enumerators;
 using BaberShopAPI.Utils.MappingProfile;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
