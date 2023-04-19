@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BaberShopAPI.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230417004000_Root")]
+    [Migration("20230419000242_Root")]
     partial class Root
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
